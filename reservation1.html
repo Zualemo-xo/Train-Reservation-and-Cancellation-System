@@ -1,0 +1,423 @@
+<html>
+<head>
+<title>Railway Ticket Booking</title>
+
+<style>
+
+    input:invalid{
+      box-shadow: 0 0 5px 1px red;
+
+    }
+    input:valid{
+      border: 2px solid black;
+    }
+
+
+
+
+
+      *{
+      font-family: monospace;
+      font-size: 16px;
+      }
+      body{
+        background-image: url('https://www.technologyforyou.org/wp-content/uploads/2020/01/railways22.jpg');
+        background-size: cover;
+      }
+      h1{
+        background-image: linear-gradient(to right,orange,yellow);
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 24px;
+        text-align: center;
+      }
+      #form-ele{
+
+          background-image: linear-gradient(to right,#ddd6f3,#faaca8);
+          box-shadow: 2px 2px 4px #000000;
+          opacity:0.9;
+          text-align:center;
+          margin-top: 100px;
+          margin-bottom: 100px;
+          margin-left: 100px;
+          margin-right: 100px;
+          padding-left: 100px;
+          padding-right: 100px;
+          padding-top: 100px;
+          padding-bottom: 100px;
+      }
+
+      #form{
+        opacity:0.9;
+      }
+      #username{
+        opacity:0.9;
+      }
+
+      #Log-In{
+        padding-left: 35px;
+        padding-right: 35px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-image: radial-gradient(#B2FEFA,#0ed2f7);
+      }
+</style>
+
+<script>
+    //Inline validation functions
+    function afk()
+    {
+      //i();
+      alert("Inside afk");
+      validate();
+
+    }
+    function validate()
+    {
+
+        if(document.getElementById("from").validity.valueMissing)
+        {
+          from_missing.innerHTML="Tname Must";
+          document.getElementById("from").focus();
+          alert("FILL UP ALL THE DETAILS");
+        }
+
+    }
+
+    function namez()
+    {
+      var uname=document.f.uname.value;
+      //var uname=document.getElementById("uname").value();
+      if(uname=="")
+      {
+        name_missing.innerHTML="Name required";
+        //document.uname.focus();
+        document.getElementById("uname").focus();
+      }
+      else{
+        name_missing.innerHTML="";
+      }
+    }
+
+    function phone_number()
+    {
+      var phoneno = /^\d{10}$/;
+      if(document.getElementById("phno").validity.rangeUnderflow)
+      {
+        phno_missing.innerHTML="Please input valid phone number";
+        document.getElementById("phno").focus();
+      }
+
+      else if (!document.getElementById("phno").value.match(phoneno)) {
+        document.getElementById("phno").focus();
+        phno_missing.innerHTML="Mobile no not in correct format";
+      }
+      else{
+        phno_missing.innerHTML="";
+      }
+    }
+
+    function fromz()
+    {
+      var frm=document.f.from.value;
+      //var frm=document.getElementById("from").value;
+      if(frm=="")
+      {
+        document.getElementById("from_missing").innerHTML="Please input from location";
+        document.getElementById("from").focus();
+      }
+      else{
+        from_missing.innerHTML="";
+      }
+
+    }
+
+    function toz()
+    {
+      var to=document.getElementById("to").value;
+      if(to=="")
+      {
+        alert("Enter the destination location");
+        document.getElementById("to").focus();
+      }
+    }
+
+    function ticketz()
+    {
+      if(document.getElementById("seats").validity.rangeUnderflow)
+      {
+        seats_missing.innerHTML="Please input valid ticket count";
+        document.getElementById("seats").focus();
+      }
+      else{
+        seats_missing.innerHTML="";
+      }
+
+    }
+    function ckcancelz()
+    {
+        ans=document.getElementById("check_cancel").value;
+        if(ans=='Y' || ans=='N')
+        {
+          cancel_missing.innerHTML="";
+        }
+        else{
+          cancel_missing.innerHTML="Please input either Y or N";
+          document.getElementById("check_cancel").focus();
+        }
+    }
+
+
+    //Closure functions
+    function outer()
+  {
+    //count=10;
+    countA1=10;
+    count_2TIERAC=10;
+    count_3TIERAC=10;
+    count_SLEEPER=10;
+    tktno=1000;
+    var arr={};
+    function inner()
+    {
+      var seatsbkd=document.getElementById("seats").value;
+      var train_class=document.getElementById("train_class").value;
+
+
+
+      //Test code
+      // alert(countA1);
+      // alert(count_2TIERAC);
+      // alert(count_3TIERAC);
+      // alert(count_SLEEPER);
+
+      //Validation
+      if(document.getElementById("seats").validity.rangeUnderflow)
+      {
+        alert("Seats less than 0,input wrong");
+        exit();
+      }
+      else if(document.getElementById("seats").validity.typeMismatch)
+      {
+                  alert("Enter number,input wrong");
+      }
+
+      //FOR cancellation
+      else if(document.getElementById("check_cancel").value=='Y')
+      {
+        alert("Cancellation is underway");
+        var cancel=document.getElementById("cancellation").value
+        // for(cancel in arr)
+        // {
+        //   alert(arr[cancel])
+        // }
+        alert(arr[cancel]); //CHK IF PRESENT
+        //alert(cancel[0]);
+        //alert(arr[0]);
+        // if(arr[cancel] in arr)
+        // {
+        //   alert(arr[cancel]);
+        // }
+        if(arr[cancel]<0)//arr[cancel]>0 prevents undefined vals to be wrongly cancelled
+        {
+          alert("Invalid");
+        }
+        else if(cancel[0]=='A')
+        {
+          countA1=countA1-(-arr[cancel]);
+          alert("Tickets left in A1:"+countA1);
+          arr[cancel]=0;//Prevents further misuse by multiple cancellation
+          alert("Cancellation completed successfully");
+        }
+
+        else if(cancel[0]=='2')
+        {
+          count_2TIERAC=count_2TIERAC-(-arr[cancel]);
+          alert("Tickets left in 2 TIER AC:"+count_2TIERAC);
+          arr[cancel]=0;//Prevents further misuse by multiple cancellation
+          alert("Cancellation completed successfully");
+        }
+
+        else if(cancel[0]=='3')
+        {
+          count_3TIERAC=count_3TIERAC-(-arr[cancel]);
+          alert("Tickets left in 3 TIER AC:"+count_3TIERAC);
+          arr[cancel]=0;//Prevents further misuse by multiple cancellation
+          alert("Cancellation completed successfully");
+        }
+
+        else if(cancel[0]=='S')
+        {
+          count_SLEEPER=count_SLEEPER-(-arr[cancel]);
+          alert("Tickets left in Sleeper:"+count_SLEEPER);
+          arr[cancel]=0;//Prevents further misuse by multiple cancellation
+          alert("Cancellation completed successfully");
+        }
+      }
+
+
+      //Ticket closure for each class
+      else{
+
+        //alert(document.getElementById("check_cancel").value);
+      alert("You have booked in "+train_class);
+      alert("Seats to be booked:"+seatsbkd);
+      //Separate case for each class
+      if(train_class=="A1")
+      {
+        countA1=countA1-seatsbkd;
+        if(countA1<0)
+        {
+          countA1=countA1-(-seatsbkd);
+          alert("Sorry!Request not possible, as Seats left:"+countA1);
+        }
+        else{
+        alert("Seats left:"+countA1);
+        alert("Seats booked successfully");
+        arr['A1'+tktno]=seatsbkd;
+        alert('Note down your ticket number: '+'A1'+(tktno));//TICKET NO for future cancellation purposes
+        //alert('Note down your ticket number:'+arr['3TAC'+(tktno)]);
+        tktno=tktno-(-1);
+        //alert(tktno);
+      }
+      }
+      else if (train_class=="2 Tier AC")
+      {
+        count_2TIERAC=count_2TIERAC-seatsbkd;
+        if(count_2TIERAC<0)
+        {
+          count_2TIERAC=count_2TIERAC-(-seatsbkd);
+          alert("Sorry!Request not possible, as Seats left:"+count_2TIERAC);
+        }
+        else{
+        alert("Seats left:"+count_2TIERAC);
+        alert("Seats booked successfully!");
+        arr['2TAC'+tktno]=seatsbkd;
+        alert('Note down your ticket number: '+'2TAC'+(tktno));
+        //alert('Note down your ticket number:'+arr['3TAC'+(tktno)]);
+        tktno=tktno-(-1);
+        //alert(tktno);
+      }
+
+      }
+      else if (train_class=="3 Tier AC")
+      {
+        count_3TIERAC=count_3TIERAC-seatsbkd;
+        if(count_3TIERAC<0)
+        {
+          count_3TIERAC=count_3TIERAC-(-seatsbkd);
+          alert("Sorry!Request not possible, as Seats left:"+count_3TIERAC);
+        }
+        else{
+        alert("Seats left:"+count_3TIERAC);
+        alert("Seats booked successfully!");
+
+        arr['3TAC'+tktno]=seatsbkd;
+        alert('Note down your ticket number: '+'3TAC'+(tktno));
+        //alert('Note down your ticket number:'+arr['3TAC'+(tktno)]);
+        tktno=tktno-(-1);
+        //alert(tktno);
+      }
+      }
+      else if (train_class=="Sleeper")
+      {
+        count_SLEEPER=count_SLEEPER-seatsbkd;
+        if(count_SLEEPER<0)
+        {
+          count_SLEEPER=count_SLEEPER-(-seatsbkd);
+          alert("Sorry!Request not possible, as Seats left:"+count_SLEEPER);
+        }
+        else{
+        alert("Seats left:"+count_SLEEPER);
+        alert("Seats booked successfully!");
+
+        //var ticket_no+={S+tktno,seatsbkd};
+
+        arr['S'+tktno]=seatsbkd;
+        alert('Note down your ticket number: '+'S'+(tktno));
+        //alert('Note down your ticket number:'+arr['S'+(tktno)]);
+        tktno=tktno-(-1);
+        //alert(tktno);
+        //alert(arr['S'+(tktno)]);
+
+      }
+      }
+
+
+  }
+
+    }
+    return inner;
+  }
+  var i=outer();
+</script>
+
+</head>
+
+<body>
+  <h1>Reservation for Chennai Express</h1>
+  <marquee>A government run,government owned railway booking service</marquee>
+  <div id="form-ele">
+  <!-- <form name="f" onsubmit="i()">  -->
+  <form name="f" >
+    <span class="nname">Enter Name:</span>
+    <br>
+    <input type="text" name="uname" id="uname" onblur="namez()" required><br>
+    <div id="name_missing"></div>
+
+    <span class="emailz">Email Address:</span>
+    <br>
+    <input type="email" required>
+    <br>
+
+    <span class="pno">Phone Number:</span>
+    <br>
+    <input type="number" id="phno" min=0 onblur="phone_number()" required>
+    <br>
+    <div id="phno_missing"></div>
+
+    <span class="head">From:</span>
+
+    <br>
+    <input type="text" id="from" placeholder="E.g)Chennai" onblur="fromz()" required><br>
+    <div id="from_missing"></div>
+    <span class="head">To:</span>
+    <br>
+    <input type="text" id="to" onblur="toz()" placeholder="E.g)Delhi" required><br>
+
+    <span class="tcls">Enter the class:</span>
+    <br>
+    <select name="train_class" id="train_class" required>
+      <option value=""></option>
+      <option value="A1">A1</option>
+      <option value="2 Tier AC">2 Tier AC</option>
+        <option value="3 Tier AC">3 Tier AC</option>
+          <option value="Sleeper">Sleeper</option>
+    </select><br>
+
+    <span class="ticketz">Enter the number of tickets to be reserved:</span>
+    <br>
+    <input type="number" id="seats" required min=1 onblur="ticketz()"><br>
+    <div id="seats_missing"></div>
+
+    <h2>For cancellation fill these additional columns: </h2>
+    Do you want to cancel a booked ticket?(Y/N)<br>
+    <input type="text" id="check_cancel" onblur="ckcancelz()"><br>
+    <div id="cancel_missing"></div>
+    <span class="ticketz">Enter the ticketid for cancellation </span><br>
+      <input type="text" id="cancellation"><br>
+
+    <input type="checkbox" required>I have read the terms and conditions<br>
+    <br>
+    <input type="button" id="Log-In" onclick="i()" value="Book Ticket">
+
+    <!-- <input type="submit" onclick="i()" value="Book Ticket"> -->
+
+    <!-- <input type="submit" onclick="afk()" value="Book Ticket"> TRYING-->
+
+
+  </form>
+    </div>
+
+</body>
+</html>
